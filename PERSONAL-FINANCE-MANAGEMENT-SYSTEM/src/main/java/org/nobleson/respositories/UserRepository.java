@@ -8,14 +8,14 @@ import java.util.Optional;
 
 public interface UserRepository {
 
-void addUser(AppUser appUser) throws SQLException;
+AppUser addUser(AppUser appUser) throws SQLException;
 List<AppUser> getAllUsers() throws  SQLException;
 
 Optional<AppUser> getUserByID(Long userID) throws SQLException;
 
 void deleteUser(Long userID) throws SQLException;
 
-void update(AppUser appUser) throws  SQLException;
+AppUser update(AppUser appUser) throws  SQLException;
 
 
 

@@ -22,7 +22,7 @@ public class UserRepo implements UserRepository{
 //}
 
     @Override
-    public void addUser(AppUser appUser) throws SQLException {
+    public AppUser addUser(AppUser appUser) throws SQLException {
         String query = "INSERT INTO users (surname,othername ,username,  email, created_at, password,) VALUES (?, ?, ?, ?, ?, ?)";
         try(PreparedStatement statement = DatabaseConnection.getConnection().prepareStatement(query)){
             statement.setString(1, appUser.getSurname());
@@ -33,6 +33,7 @@ public class UserRepo implements UserRepository{
             statement.setString(6, appUser.getPassword());
             statement.executeUpdate();
         }
+        return appUser;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class UserRepo implements UserRepository{
     }
 
     @Override
-    public void update(AppUser appUser) throws SQLException {
+    public AppUser update(AppUser appUser) throws SQLException {
         String query = "UPDATE users SET username = ?, password = ?, email = ? WHERE user_id = ?";
         try (PreparedStatement statement = DatabaseConnection.getConnection().prepareStatement(query)) {
             statement.setString(1, appUser.getUsername());
@@ -96,5 +97,7 @@ public class UserRepo implements UserRepository{
             statement.setLong(4, appUser.getUserID());
             statement.executeUpdate();
         }
+
+        return appUser;
     }
 }
