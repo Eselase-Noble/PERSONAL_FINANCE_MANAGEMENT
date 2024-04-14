@@ -9,13 +9,13 @@ import java.util.Optional;
 public interface UserRepository {
 
 AppUser addUser(AppUser appUser) throws SQLException;
-List<AppUser> getAllUsers() throws  SQLException;
+List<AppUser> getAllUsers() throws SQLException, ClassNotFoundException;
 
 Optional<AppUser> getUserByID(Long userID) throws SQLException;
 
 void deleteUser(Long userID) throws SQLException;
 
-AppUser update(AppUser appUser) throws  SQLException;
+AppUser update(AppUser appUser) throws SQLException, ClassNotFoundException;
 
 
 

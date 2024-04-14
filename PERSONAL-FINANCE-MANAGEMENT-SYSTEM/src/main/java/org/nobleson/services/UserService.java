@@ -28,7 +28,7 @@ public class UserService {
         )));
     }
 
-    public List<AppUser> getAllUsers() throws SQLException{
+    public List<AppUser> getAllUsers() throws SQLException, ClassNotFoundException {
         return userRepo.getAllUsers();
     }
 
@@ -36,7 +36,7 @@ public class UserService {
         userRepo.deleteUser(userID);
     }
 
-    public AppUser updateUser(AppUser user) throws SQLException{
+    public AppUser updateUser(AppUser user) throws SQLException, ClassNotFoundException {
         return userRepo.update(user);
     }
 }

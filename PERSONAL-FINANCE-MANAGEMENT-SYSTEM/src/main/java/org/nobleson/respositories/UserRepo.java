@@ -4,6 +4,7 @@ import org.nobleson.connection.DatabaseConnection;
 import org.nobleson.entities.AppUser;
 
 import javax.xml.crypto.Data;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,11 +16,12 @@ import java.util.Optional;
 
 //This class handles all the NECESSARY QUERIES
 public class UserRepo implements UserRepository{
-//private Connection connection = DatabaseConnection.getConnection();
 
-//public UserRepo (Connection connection) throws SQLException {
-//    this.connection = connection;
-//}
+private Connection connection = DatabaseConnection.getConnection();
+
+public UserRepo (Connection connection) throws SQLException, ClassNotFoundException {
+    this.connection = connection;
+}
 
     @Override
     public AppUser addUser(AppUser appUser) throws SQLException {
@@ -32,12 +34,14 @@ public class UserRepo implements UserRepository{
             statement.setDate(5, appUser.getCreatedAt());
             statement.setString(6, appUser.getPassword());
             statement.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return appUser;
     }
 
     @Override
-    public List<AppUser> getAllUsers() throws SQLException {
+    public List<AppUser> getAllUsers() throws SQLException, ClassNotFoundException {
 
     List<AppUser> users = new ArrayList<>();
     String query = "SELECT * FROM Users";
@@ -75,6 +79,8 @@ public class UserRepo implements UserRepository{
             } else {
                 return Optional.empty();
             }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -84,11 +90,13 @@ public class UserRepo implements UserRepository{
         try (PreparedStatement statement = DatabaseConnection.getConnection().prepareStatement(query)) {
             statement.setLong(1, userID);
             statement.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public AppUser update(AppUser appUser) throws SQLException {
+    public AppUser update(AppUser appUser) throws SQLException, ClassNotFoundException {
         String query = "UPDATE users SET username = ?, password = ?, email = ? WHERE user_id = ?";
         try (PreparedStatement statement = DatabaseConnection.getConnection().prepareStatement(query)) {
             statement.setString(1, appUser.getUsername());
